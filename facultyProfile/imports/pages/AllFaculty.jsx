@@ -61,36 +61,31 @@ export default class AllStudents extends Component{
     return (
       <div>
           <NavigationApp />
-          <br/>
-          <div className="contents">
+          <div className="container">
               <EachFaculty
                   projectPoster={this.state.infoSecurityPosters}
                   projectName={this.state.infoSecurityNames}
                   projectDesc={this.state.infoSecurityDesc}
                   projectTitle={this.state.infoSecurity}
               />
-              <br/>
               <EachFaculty
                   projectPoster={this.state.animationArtPosters}
                   projectName={this.state.animationArtNames}
                   projectDesc={this.state.animationArtDesc}
                   projectTitle={this.state.animationArt}
               />
-              <br/>
               <EachFaculty
                   projectPoster={this.state.financialInfoPosters}
                   projectName={this.state.financialInfoNames}
                   projectDesc={this.state.financialInfoDesc}
                   projectTitle={this.state.financialInfo}
               />
-              <br/>
               <EachFaculty
                   projectPoster={this.state.infoTechPosters}
                   projectName={this.state.infoTechNames}
                   projectDesc={this.state.infoTechDesc}
                   projectTitle={this.state.infoTech}
               />
-              <br/>
               <EachFaculty
                   projectPoster={this.state.gameDesignPosters}
                   projectName={this.state.gameDesignNames}
@@ -98,7 +93,6 @@ export default class AllStudents extends Component{
                   projectTitle={this.state.gameDesign}
               />
           </div>
-          <br />
           <Footer />
       </div>
     );

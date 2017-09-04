@@ -20,46 +20,42 @@ export default class eachFaculty extends Component{
 
   render(){
     return(
-    <div id="wrap">
-        <div id="header">
-            <div className="w3-row w3-border">
-                <div className="w3-quarterFacultyName w3-container hidTop">
+        <div className="row">
+            <div className="col-xs-12">
+                <div className="hidTop">
                     <h1 className="mainHeader">{this.props.projectTitle}</h1>
                 </div>
-                {this.props.projectPoster.map((poster, index) => {
-                    return(
-
-                        <div className="w3-quarterFaculty w3-container" key={index}>
-                            <Link to ={{
-                                pathname: '/ViewProject',
-                                state: { ProjectID: 'b46eebe3-53f4-4d7e-adaf-f7459dffc230' }
-                            }}>
-                                <p><img className="normal" src={poster} alt="poster" className="image" /></p>
-                                <p className="projHead">{this.props.projectName[this.state.count]}</p>
-                                <p>{this.props.projectDesc[this.state.count]}</p>
-                            </Link>
-                        </div>
-                    )
-                    {this.increaseCount}
-                }
+            </div>
+            {this.props.projectPoster.map((poster, index) => {
+                return(
+            <div className="col-xs-3" key={index}>
+                <Link to ={{
+                    pathname: '/ViewProject',
+                    state: { ProjectID: 'b46eebe3-53f4-4d7e-adaf-f7459dffc230' }
+                }}>
+                    <p><img src={poster} alt="poster" className="img-thumbnail" /></p>
+                    <p className="projHead">{this.props.projectName[this.state.count]}</p>
+                    <p>{this.props.projectDesc[this.state.count]}</p>
+                </Link>
+            </div>
                 )
-                }
-                <div className="w3-quarterFacultyName w3-container">
-                    <h1 className="mainHeader hidden">{this.props.projectTitle}</h1>
-                    <p className="mainLinkFaculty floatBottom"><button className="studentButton">
+                {this.increaseCount}
+            }
+            )
+            }
+            <div className="col-xs-3">
+                  <h1 className="mainHeader hidden">{this.props.projectTitle}</h1>
+                  <p className="mainLinkFaculty floatBottom">
+                    <button className="btn btn-success">
                         <Link to ={{
                             pathname: '/AllProjects',
                         }}>View all projects
                         </Link>
-                    </button></p>
-                </div>
+                    </button>
+                  </p>
             </div>
-
-            {/*This is to ensure that the div height covers all content*/}
-            <div className="clearfix"></div>
         </div>
-    </div>
-            );
+        );
   }
 }
 

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { withRouter, Link } from 'react-router-dom';
 import Gallery from 'react-grid-gallery';
+import Swiper from 'react-id-swiper';
 
 import NavigationApp from '../../components/NavigationApp.jsx';
 import Footer from '../../components/Footer.jsx';
@@ -13,12 +14,25 @@ export default class handleViewProject extends Component{
 		super();
 
         this.state = {
-            getImages: [],
+            getImages: ['./img/Project1.jpg', './img/Project2.jpg'],
             listOfImages: [],
+            width: '',
+            height: '',
+            dimensions: {},
         }
+
+        this.onImgLoad = this.onImgLoad.bind(this);
+
+        //let {width, height} = Dimensions.get('window')
+        //console.log(width, height)
     }
 
-    update(){
+    onImgLoad({target:img}) {
+        this.setState({dimensions:{height:img.offsetHeight,
+                                   width:img.offsetWidth}});
+    }
+
+    /*update(){
         this.props.projectImages.map((images) => {
 
             var img = images.image;
@@ -32,15 +46,17 @@ export default class handleViewProject extends Component{
                     "thumbnailHeight": 174,
                     "caption": caption,
 
-                    /*"src": "https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg",
+                    "src": "https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg",
                     "thumbnail": "https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_n.jpg",
                     "thumbnailWidth": 320,
                     "thumbnailHeight": 174,
-                    "caption": "After Rain (Jeshu John - designerspics.com)",*/
+                    "caption": "After Rain (Jeshu John - designerspics.com)",
                 }
             )
         });
-    }
+    }*/
+
+
 
   render(){
 
@@ -71,11 +87,6 @@ export default class handleViewProject extends Component{
         paddingLeft: '20px',
         paddingRight: '20px',
     }
-
-    /*var imageSizeLandscape = {
-      width: '100%',
-      maxWidth: '500px',
-    }*/
 
     var imageSize = {
       maxWidth: '100%',
@@ -108,50 +119,46 @@ export default class handleViewProject extends Component{
         paddingBotton: '2%',
     }
 
-    var posterImage = {
-        maxWidth: '300px',
-    }
-
-    var content = {
-        fontSize: '12px',
-    }
-
     var profileImg = './img/profile.jpg';
     var project = './img/Project1.jpg';
     var banner = './img/Banner1.jpg';
     var landscape = './img/landscape.jpg';
+
+    const {width, height} = this.state.dimensions;
 
     return (
         <div>
             <NavigationApp />
             <br/>
 
-            <div className="projectContainer">
-                <h1 className="my-4">{this.props.projectName} {/*<small>Secondary Text</small>*/}</h1>
+            <div style={alignCenter}>
+                <h1 style={header}>Project Name Here</h1>
 
-                <div className="row">
-                    {/*750x500*/}
-                    <div className="col-md-7"><img className="img-fluid" src={this.props.projectPoster} alt="" style={ posterImage } /></div>
-                    <div className="col-md-4">
-                        <h3 className="my-3">Project Description</h3>
-                        <p style={content}>{this.props.projectDesc}</p>
-                        <h3 className="my-3">Project Details</h3>
-                        Start Date: {this.props.projectStartDate}
-                        <br/>
-                        End Date: {this.props.projectEndDate}
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-xs-5 projAlignRight"><img src={project} alt="poster" style={imageSize}/></div>
+                        <div className="col-xs-5 projAlignLeft">
+                            <h1>Details</h1>
+                            Start Date: 28th August 2017
+                            <br/>
+                            End Date: 29th August 2017
+                        </div>
                     </div>
                 </div>
-            </div>
+                <hr/>
 
+                <div id="wrap" style={lineSpacing}>
+                    <p className="indiProject">
+                        Hi a description here
+                    </p>
+                </div>
+                <hr/>
 
-            <div style={alignCenter}>
-
-                {this.props.projectImages.length > 0 &&
+              {/*{this.props.projectImages.length > 0 &&*/}
                     <div>
                         <div id="wrap">
                             <h1 className="mainHeader">Gallery</h1>
                             <div style={padding}>
-                                {this.update()}
                                 <Gallery
                                     images={this.state.getImages}
                                     enableImageSelection={false}
@@ -163,37 +170,30 @@ export default class handleViewProject extends Component{
                         </div>
                         <hr/>
                     </div>
-                }
+                {/*}*/}
 
-                {this.props.projectMembers.length > 0 &&
+                {/*{this.props.projectMembers.length > 0 &&*/}
                     <div id="wrap">
                         <h1 className="mainHeader">Team Member</h1>
 
                         <div className="container-fluid">
                             <div className="row" style={ justifyContent }>
-                                {this.props.projectMembers.map((studentProject, index) => {
-                                    return(
-                                        <div className="col-xs-3" key={index}>
-                                            <Link to ={{
-                                                //pathname: '/ViewStudent',
-                                                pathname: '/ViewStudent/' + studentProject.student_id,
-                                                //state: { StudentID: studentProject.student_id }
-                                            }}>
-                                                <img src={ studentProject.student_photo } alt={ studentProject.student_name } style={ imageStyle } />
-                                                <h2>{studentProject.student_name}</h2>
-                                                <p>{studentProject.project_role}</p>
-                                            </Link>
+                                {/*{this.props.projectMembers.map((studentProject, index) => {
+                                    return(*/}
+                                        <div className="col-xs-3">
+                                            <img src={ profileImg } alt="image" style={ imageStyle } />
+                                            <h2>Amanda Quek</h2>
+                                            <p>Project Manager</p>
                                         </div>
-                                    )
+                                    {/*)
                                 }
-                                )}
+                                )
+                              }*/}
 
                             </div>
                         </div>
-
-
                     </div>
-                }
+                {/*}*/}
             </div>
 
             {/*This is to ensure that the div height covers all content*/}
@@ -206,7 +206,7 @@ export default class handleViewProject extends Component{
     }
 }
 
-handleViewProject.propTypes = {
+/*handleViewProject.propTypes = {
     projectName: PropTypes.string.isRequired,
     projectStartDate: PropTypes.string.isRequired,
     projectEndDate: PropTypes.string.isRequired,
@@ -216,4 +216,4 @@ handleViewProject.propTypes = {
     projectApproved: PropTypes.string.isRequired,
     projectImages: PropTypes.array.isRequired,
     projectMembers: PropTypes.array.isRequired,
-};
+};*/

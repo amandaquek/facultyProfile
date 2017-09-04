@@ -10,7 +10,7 @@ class ImageCarousel extends Component {
     images.map((image) => {
       galleryImages.push(
         <div key={image}>
-          <img className="normal" alt={''} src={image} />
+          <img alt={''} src={image} />
         </div>
       );
     });

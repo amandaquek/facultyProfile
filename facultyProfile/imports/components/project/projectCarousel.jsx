@@ -3,19 +3,8 @@ import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { withRouter, Link } from 'react-router-dom';
 
-import LinesEllipsis from 'react-lines-ellipsis';
 import Swiper from 'react-id-swiper';
 import { Line, Circle } from 'rc-progress';
-
-function trimText(str) {
-    if (str.length > 200) {
-        const maxLength = 182;
-        const trimmedString = str.substr(0, maxLength);
-        return trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))).concat('...');
-    }
-    return str;
-}
-
 
 export default class projectCarousel extends Component{
 
@@ -33,7 +22,7 @@ export default class projectCarousel extends Component{
     });
   }
 
-  renderProjectSwiper(allProjects) {
+  render(){
       const params = {
           pagination: '.swiper-pagination',
           effect: 'coverflow',
@@ -56,8 +45,6 @@ export default class projectCarousel extends Component{
 
     var imageStyle = {
         width: '100%',
-        maxWidth: '280px',
-        maxHeight: '395px',
     }
 
     var centerImage = {
@@ -65,8 +52,11 @@ export default class projectCarousel extends Component{
       alignItems: 'center',
       justifyContent: 'center',
     }
-      if (allProjects.length > 0) {
-          return (
+
+    return (
+        <div>
+            <h1 className="mainHeader">Featured Projects</h1>
+
             <Swiper {...params}>
                 {this.props.allProjects.map((studentProject, index) => {
                     return(
@@ -82,15 +72,11 @@ export default class projectCarousel extends Component{
                                     </div>
 
                                     <div className="card__content card__padding">
-                                        <h2><a href="#">{ studentProject.project_name }</a></h2>
+                                        <article className="card__article">
+                                            <h2><a href="#">{ studentProject.project_name }</a></h2>
 
-                                        <LinesEllipsis
-                                            text={ trimText(studentProject.project_desc) }
-                                            maxLine='3'
-                                            ellipsis=''
-                                            trimRight
-                                            basedOn='letters'
-                                        />
+                                            <p>{ studentProject.project_desc }</p>
+                                        </article>
                                     </div>
                                 </Link>
                             </div>
@@ -112,44 +98,24 @@ export default class projectCarousel extends Component{
                                         //state: { ProjectID: studentProject.pid }
                                     }}>
                                         <div className="card__image border-tlr-radius" style={ centerImage }>
-                                            <img className="normal" src={ studentProject.project_poster } alt="image" style={ imageStyle } />
+                                            <img src={ studentProject.project_poster } alt="image" style={ imageStyle } />
                                         </div>
 
                                         <div className="card__content card__padding">
                                             <article className="card__article">
                                                 <h2><a href="#">{ studentProject.project_name }</a></h2>
 
-                                                <LinesEllipsis
-                                                    text={ trimText(studentProject.project_desc) }
-                                                    maxLine='3'
-                                                    ellipsis=''
-                                                    trimRight
-                                                    basedOn='letters'
-                                                />
+                                                <p>{ studentProject.project_desc }</p>
                                             </article>
                                         </div>
                                     </Link>
                                 </div>
                             </div>
                         )
-                    })}
+                    }
+                    )
+                }
             </Swiper>
-          );
-
-      }
-      return null;
-  }
-
-  render(){
-
-
-    const { allProjects } = this.props;
-
-    return (
-        <div>
-            <h1 className="mainHeader">Featured Projects</h1>
-            {this.renderProjectSwiper(allProjects)}
-            <div className="clearfix"></div>
         </div>
         );
 

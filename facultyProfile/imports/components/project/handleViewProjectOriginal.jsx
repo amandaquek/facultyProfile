@@ -108,14 +108,6 @@ export default class handleViewProject extends Component{
         paddingBotton: '2%',
     }
 
-    var posterImage = {
-        maxWidth: '300px',
-    }
-
-    var content = {
-        fontSize: '12px',
-    }
-
     var profileImg = './img/profile.jpg';
     var project = './img/Project1.jpg';
     var banner = './img/Banner1.jpg';
@@ -126,25 +118,28 @@ export default class handleViewProject extends Component{
             <NavigationApp />
             <br/>
 
-            <div className="projectContainer">
-                <h1 className="my-4">{this.props.projectName} {/*<small>Secondary Text</small>*/}</h1>
+            <div style={alignCenter}>
+                <h1 style={header}>{this.props.projectName}</h1>
 
-                <div className="row">
-                    {/*750x500*/}
-                    <div className="col-md-7"><img className="img-fluid" src={this.props.projectPoster} alt="" style={ posterImage } /></div>
-                    <div className="col-md-4">
-                        <h3 className="my-3">Project Description</h3>
-                        <p style={content}>{this.props.projectDesc}</p>
-                        <h3 className="my-3">Project Details</h3>
-                        Start Date: {this.props.projectStartDate}
-                        <br/>
-                        End Date: {this.props.projectEndDate}
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-xs-5 projAlignRight"><img src={this.props.projectPoster} alt="poster" style={imageSize}/></div>
+                        <div className="col-xs-5 projAlignLeft">
+                            <h1>Details</h1>
+                            Start Date: {this.props.projectStartDate}
+                            <br/>
+                            End Date: {this.props.projectEndDate}
+                        </div>
                     </div>
                 </div>
-            </div>
+                <hr/>
 
-
-            <div style={alignCenter}>
+                <div id="wrap" style={lineSpacing}>
+                    <p className="indiProject">
+                        {this.props.projectDesc}
+                    </p>
+                </div>
+                <hr/>
 
                 {this.props.projectImages.length > 0 &&
                     <div>
@@ -175,12 +170,11 @@ export default class handleViewProject extends Component{
                                     return(
                                         <div className="col-xs-3" key={index}>
                                             <Link to ={{
-                                                //pathname: '/ViewStudent',
-                                                pathname: '/ViewStudent/' + studentProject.student_id,
-                                                //state: { StudentID: studentProject.student_id }
+                                                pathname: '/ViewStudent',
+                                                state: { StudentID: studentProject.student_id }
                                             }}>
-                                                <img src={ studentProject.student_photo } alt={ studentProject.student_name } style={ imageStyle } />
-                                                <h2>{studentProject.student_name}</h2>
+                                                <img src={ profileImg } alt="image" style={ imageStyle } />
+                                                <h2>{studentProject.student_id}</h2>
                                                 <p>{studentProject.project_role}</p>
                                             </Link>
                                         </div>
