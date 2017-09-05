@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900');
 @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700');
 @import url('https://fonts.googleapis.com/css?family=Lobster');
+
 img {
   max-width: 100%;
   height: auto;
@@ -13,6 +14,11 @@ p.facultyContent {
   color: #777;
 }
 
+@media screen and (min-width:280px) and (max-width:780px) {
+  p.facultyContent {
+    margin: 5%;
+  }
+}
 
 /* -------------------------------------Header--------------------------------- */
 
@@ -27,7 +33,7 @@ header#header {
 }
 
 header#header .main-header {
-  background: url(../img/img_isf_2017.jpg);
+  /*background: url(../img/img_isf_2017.jpg);*/
   background-size: cover;
   overflow: hidden;
   padding: 120px 0;
@@ -218,7 +224,7 @@ header #logo {}
 .content-box.box-1 {}
 
 .content-box.box-1 .wrap-box {
-  padding: 80px 0;
+  padding: 80px 0 0;
 }
 
 .content-box.box-1 .owl-carousel .item {

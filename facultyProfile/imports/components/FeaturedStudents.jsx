@@ -3,119 +3,59 @@ import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { withRouter, Link } from 'react-router-dom';
 
+import StudentCarousel from '../components/student/studentCarousel.jsx';
+
 import Swiper from 'react-id-swiper';
 import LinesEllipsis from 'react-lines-ellipsis';
 
-export default class FeaturedStudents extends Component{
-    constructor(props) {
-      super(props);
-
-      this.state = {
-          featuredStudents: [],
-      };
-
+function trimText(str) {
+    if (str.length > 200) {
+        const maxLength = 182;
+        const trimmedString = str.substr(0, maxLength);
+        return trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))).concat('...');
     }
+    return str.concat('...');
+}
 
-    async componentDidMount(){
-        proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-        /*apiURL = 'http://54.191.109.239/FYPXpal/GetStudentInfo';*/
-        apiURL = 'http://54.191.109.239/xPalBackend_FYPXpal/GetAllFeatured';
-        options = {
-            method: 'GET',
-        };
+export default class FeaturedStudents extends Component{
 
-      try{
-          /*var response = await fetch(proxyUrl + apiURL, options);*/
-          var response = await fetch(proxyUrl + apiURL, options);
+  render() {
 
-          // response message
-          var data = await response.json();
-
-          var status = response.status;
-
-          if (status == 200){
-          // response code
-          var featuredStudents = data.feautured_students;
-          console.log(featuredStudents);
-
-          this.setState({
-            featuredStudents: featuredStudents,
-          });
-          }else{
-              //Handle other than success
-          }
-      }catch(error){
-          alert(error);
+  const params = {
+      pagination: '.swiper-pagination',
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      allowSwipeToPrev: true,
+      allowSwipeToNext: true,
+      loop: true,
+      autoplay: 2000,
+      coverflow: {
+        rotate: 50,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows : false
       }
     }
 
-  render() {
-      const params = {
-          pagination: '.swiper-pagination',
-          effect: 'coverflow',
-          grabCursor: true,
-          centeredSlides: true,
-          slidesPerView: 'auto',
-          allowSwipeToPrev: true,
-          allowSwipeToNext: true,
-          loop: true,
-          autoplay: 2000,
-          coverflow: {
-            rotate: 50,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            slideShadows : false
-          }
-        }
-
-        var imageStyle = {
-           width: 200,
-           height: 200,
-           borderRadius: '50%',
-       };
-
-       var centerImage = {
-           display: 'flex',
-         alignItems: 'center',
-         justifyContent: 'center',
-       }
+    const { students } = this.props;
 
     return (
-      <div id="wrap">
+      <div id="wrap"  style={{overflowX: 'hidden' }}>
           <div id="header">
-              <h1 className="mainHeader">Featured Students</h1>
-
-              <Swiper {...params}>
-                  {this.state.featuredStudents.map((studentProject, index) => {
-                      var studentURL = "/ViewStudent/" + studentProject.student_id;
-
-                      return(
-                          <div className="wrapper">
-                              <div className="card radius"> {/*shadowDepth1*/}
-                                  <div className="card__image border-tlr-radius" style={centerImage}>
-                                      <img src={studentProject.student_photo} alt="image" style={imageStyle} />
-                                  </div>
-                                  <div className="card__content card__padding">
-                                      <article className="card__article">
-                                          <h2><a href={studentURL}>{studentProject.student_name}</a></h2>
-                                          <LinesEllipsis
-                                              text={studentProject.student_desc}
-                                              maxLine='3'
-                                              ellipsis='...'
-                                              trimRight
-                                              basedOn='letters'
-                                          />
-                                      </article>
-                                  </div>
-                              </div>
-                          </div>
-                      )
-                  }
-                  )}
-              </Swiper>
-
-
+              {/*<h1 className="mainHeader">Projects</h1>*/}
+              <div className="w3-container">
+                  {/*<h2>Mobile First Responsiveness</h2>
+                          <p className="w3-large">Try to resize the window!</p>
+                  http://54.191.109.239/FYPXpal/AmandaInfo*/}
+              </div>
+              <div className="w3-row w3-border">
+                  <StudentCarousel
+                      allStudents={students}
+                  />
+              </div>
               {/*This is to ensure that the div height covers all content*/}
               <div className="clearfix"></div>
               <p className="mainLink"><a href="/AllStudents">View all students >></a></p>

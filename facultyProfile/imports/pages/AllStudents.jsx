@@ -25,20 +25,67 @@ export const logPageView = () => {
 /*Analytics*/
 
 export default class AllStudents extends Component{
-    componentDidMount(){
+    constructor(props) {
+      super(props);
+
+      this.state = {
+          allStudents: [],
+          search: '',
+      };
+    }
+
+    async componentDidMount(){
         initGA();
         logPageView();
+
+        proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        /*apiURL = 'http://54.191.109.239/FYPXpal/GetStudentInfo';*/
+        apiURL = 'http://54.191.109.239/xPalBackend_FYPXpal/GetStudentDisplay';
+        options = {
+            method: 'GET',
+        };
+
+      try{
+          /*var response = await fetch(proxyUrl + apiURL, options);*/
+          var response = await fetch(proxyUrl + apiURL, options);
+
+          // response message
+          var data = await response.json();
+
+          var status = response.status;
+
+          if (status == 200){
+          // response code
+          var allStudents = data.student_display_info;
+          console.log(allStudents);
+
+          this.setState({
+            allStudents: allStudents,
+          });
+          }else{
+              //Handle other than success
+          }
+      }catch(error){
+          alert(error);
+      }
+    }
+
+    /*Method for search to call*/
+    onSearchChange(value){
+        this.setState({
+            search: value.target.value,
+        });
     }
 
     render() {
         return (
           <div>
-              <NavigationApp />
+              <NavigationApp onSearchChange={this.onSearchChange.bind(this)} />
               <br/>
               <div className="contentWrapper">
                   {/*<Filter />
                   <br/>*/}
-                  <ListOfStudents />
+                  <ListOfStudents search={this.state.search}/>
               </div>
               <br />
               <Footer />

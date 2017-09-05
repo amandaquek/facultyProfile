@@ -8,7 +8,7 @@ import LinesEllipsis from 'react-lines-ellipsis';
 
 function searchingFor(term){
     return function(x){
-        return x.course_name.includes(term) || !term;
+        return x.course_name.toLowerCase().includes(term.toLowerCase()) || x.student_name.toLowerCase().includes(term.toLowerCase()) || x.student_desc.toLowerCase().includes(term.toLowerCase()) || !term;
     }
 }
 
@@ -28,6 +28,12 @@ export default class ListOfStudents extends Component{
 
     searchHandler(event){
         this.setState({ term: event.target.value })
+    }
+
+    componentWillReceiveProps(newSearch){
+        this.setState({
+            term: newSearch.search
+        });
     }
 
     async componentDidMount(){
@@ -80,33 +86,16 @@ export default class ListOfStudents extends Component{
           padding: '5px 13px',
       }
 
-      var paddingButton = {
-          padding: '1%',
-          display: 'inline',
-      }
-
     return(
       <div>
           <div style={filter}>
               <form>
-                  <div style={paddingButton}>
-                      <button type="button" onClick={this.searchHandler} class="focus" value="" style={eachButton}>All</button>
-                  </div>
-                  <div style={paddingButton}>
-                      <button type="button" onClick={this.searchHandler} class="focus" value="Diploma in Animation & 3D Arts" style={eachButton}>Diploma in Animation & 3D Arts</button>
-                  </div>
-                  <div style={paddingButton}>
-                      <button type="button" onClick={this.searchHandler} class="focus" value="Diploma in Financial Informatics" style={eachButton}>Diploma in Financial Informatics</button>
-                  </div>
-                  <div style={paddingButton}>
-                      <button type="button" onClick={this.searchHandler} class="focus" value="Diploma in Game Design" style={eachButton}>Diploma in Game Design</button>
-                  </div>
-                  <div style={paddingButton}>
-                      <button type="button" onClick={this.searchHandler} class="focus" value="Diploma in Inforamtion Technology" style={eachButton}>Diploma in Inforamtion Technology</button>
-                  </div>
-                  <div style={paddingButton}>
-                      <button type="button" onClick={this.searchHandler} class="focus" value="Arts Business Management" style={eachButton}>Arts Business Management</button>
-                  </div>
+                  <button type="button" onClick={this.searchHandler} class="focus" value="" style={eachButton}>All</button>
+                  <button type="button" onClick={this.searchHandler} class="focus" value="Diploma in Information Security & Forensics" style={eachButton}>Information Security & Forensics</button>
+                  <button type="button" onClick={this.searchHandler} class="focus" value="Diploma in Animation & 3D Arts" style={eachButton}>Animation & 3D Arts</button>
+                  <button type="button" onClick={this.searchHandler} class="focus" value="Diploma in Financial Informatics" style={eachButton}>Financial Informatics</button>
+                  <button type="button" onClick={this.searchHandler} class="focus" value="Diploma in Information Technology" style={eachButton}>Information Technology</button>
+                  <button type="button" onClick={this.searchHandler} class="focus" value="Diploma in Immersive Media & Game Design" style={eachButton}>Immersive Media & Game Design</button>
               </form>
           </div>
 
@@ -126,9 +115,9 @@ export default class ListOfStudents extends Component{
                                   <div className="backgroundImage">
                                       <div className="centerImage">
                                           {displayAllStudents.student_photo == "" || displayAllStudents.student_photo == "null" || displayAllStudents.student_photo == null ?
-                                              <img src="../img/user.png" alt={displayAllStudents.student_name} className="imageStyle" />
+                                              <img className="normal" src="../img/user.png" alt={displayAllStudents.student_name} className="imageStyle" />
                                           :
-                                          <img src={displayAllStudents.student_photo} alt={displayAllStudents.student_name} className="imageStyle" />
+                                          <img className="normal" src={displayAllStudents.student_photo} alt={displayAllStudents.student_name} className="imageStyle" />
                                           }
                                       </div>
                                   </div>
@@ -158,22 +147,6 @@ export default class ListOfStudents extends Component{
   }
 }
 
-ListOfStudents.propTypes = {
-    name: PropTypes.string.isRequired,
-    studentDesc: PropTypes.string,
-    courseName: PropTypes.string,
-    email: PropTypes.string.isRequired,
-    photo: PropTypes.string.isRequired,
-    linkedin: PropTypes.string.isRequired,
-    personalProfile: PropTypes.string.isRequired,
-    twitter: PropTypes.string.isRequired,
-    git: PropTypes.string.isRequired,
-    projects: PropTypes.array.isRequired,
-    studentSkills: PropTypes.array.isRequired,
-    hobbies: PropTypes.string.isRequired,
-    eduLvl: PropTypes.array.isRequired,
-    workExp: PropTypes.array.isRequired,
-    cert: PropTypes.array.isRequired,
-    cca: PropTypes.array.isRequired,
-    achievements: PropTypes.array.isRequired,
-};
+ListOfStudents.PropTypes = {
+    search: PropTypes.string.isRequired,
+}
